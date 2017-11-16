@@ -8,5 +8,5 @@ import { CotizacionComponent } from './cotizacion/cotizacion.component'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //title = 'Cotiz  Version 1.0.0';
+
 }

@@ -1,0 +1,90 @@
+<div class="jumbotron jumbotron-sm">
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-12 col-lg-12">
+              <h1 class="h1">
+                  Cotiz <small>Simple quotation form</small></h1>
+                  <p class = "ident">Using Angular V5, reactive form, FormArray and autocomplete with observables techniques</p>
+                  <p class = "ident">Built by Héctor Agüero, 2017 - email: heagueron@gmail.com</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <form [formGroup]="cotizacionForm" novalidate>
+    <div class="row">
+    <div class="col-md-4">                                                   
+    <div> 
+        <label><b>Client:</b>
+            <input formControlName="cliente"  #customer id="comprador" type="text">
+        </label>
+        <small *ngIf="mostrarIdCliente">Id: {{idCliente}}</small>                                 
+    </div>
+  
+    <div>    
+      <ul class="list-group" *ngIf="mostrarClientes">
+        <li class="list-group-item" *ngFor="let cliente of clientes; let i=index" [attr.data-index]="i">
+          <p (click)="clienteSeleccionado(cliente.id, cliente.nombre)"> {{i + 1}} - {{ cliente.nombre }}</p>
+        </li>
+      </ul>  
+    </div>
+    </div> 
+    </div> 
+  
+    <div class="row">
+      <div class="col-md-4"><label class = "renglon"><b>Product</b></label></div>
+      <div class="col-md-2"><label class = "renglon"><b>Quantity</b></label></div>
+      <div class="col-md-2"><label class = "renglon"><b>Price</b></label></div>
+      <div class="col-md-2" style = "text-align: right;"><label class = "renglon" ><b>Total Product</b></label></div>
+    </div>  
+    <div formArrayName="items">
+    
+      <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i" >                      
+     
+      <!-- The repeated renglon template -->                                                    
+        <div class="row">
+          <div class="col-md-4">                                     
+           <input formControlName="producto" type="text">                                                              
+            <ul class="list-group" *ngIf="mostrarProductos[i]">
+              <li class="list-group-item" *ngFor="let producto of productos; let y=index" [attr.data-index]="y">
+               <p (click)="productoSeleccionado(producto.id, producto.nombre, producto.precio, i)"> {{y + 1}} - {{ producto.nombre }}</p>
+              </li>
+            </ul> 
+          </div>
+    
+          <div class="col-md-2">
+            <input formControlName="cantidad" type="number">                                  
+          </div>
+    
+          <div class="col-md-2">       
+            <p>{{productoPrecio[i]}}</p>                              
+          </div>
+
+          <div class="col-md-2">        
+            <p style = "text-align: right;">{{productoTotal[i]}}</p>                               
+          </div>
+
+          <div class="col-md-2">
+            <button (click)="eliminarRenglon(i)" type="button">Delete item</button>
+          </div>
+        </div>
+        <!-- End of The repeated renglon template -->
+      </div> <!-- End of items.controls loop div -->
+    </div> <!-- End of formArray div -->
+  <div class="row">
+    <div class="col-md-8" style = "text-align: right;"><b>Quotation Total:</b></div>
+    <div class="col-2"><p class = "total" style = "text-align: right;">{{totalCotizacion}}</p></div>
+  </div>
+    
+  <button (click)="addRenglon()" type="button">Add item</button>
+<hr>
+  <div class="form-group form-black label-floating is-empty"> 
+    <label class="center-block"><b>Conditions:</b>
+      <textarea class="form-control" formControlName="condiciones" rows="5" cols="90"> </textarea>
+    </label>                            
+  </div>
+                          
+</form>
+</div>
+
